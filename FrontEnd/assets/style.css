@@ -186,3 +186,24 @@ footer nav ul {
 	margin: 2em
 }
 
+/** **/
+
+.filter ul {
+	display: flex;
+	flex-wrap: wrap;
+	cursor: pointer;
+	justify-content: center;
+}
+
+.filter ul li {
+	margin: 50px 10px;
+	border-radius: 60px;
+	border: 1px solid #1D6154;
+	color: #1D6154;
+	padding: 10px 10px;
+}
+
+.filter ul li:hover {
+	background: #1D6154;
+	color: #FFFFFF;
+}
