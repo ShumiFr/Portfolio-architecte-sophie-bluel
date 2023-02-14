@@ -1,14 +1,20 @@
-//window.addEventListener('DOMContentLoaded', (event) => {
-    //request(urlAPI, { }).then(response => {
-        //createDOM(response);
-        //filterByApartment(response);
-        //filterByObject(response);
-        //filterByAll(response);
-        //filterByHotel(response);
-    //})
+window.addEventListener('DOMContentLoaded', (event) => {
+    request(urlAPI, { }).then(response => {
+        createDOM(response);
+        filterByApartment(response);
+        filterByObject(response);
+        filterByAll(response);
+        filterByHotel(response);
+    })
+})
+
+
 
     request("http://localhost:5678/api/users/login", {
         method: 'POST',
+        headers: {
+            'Content-type': 'application/json;charset=utf-8',
+        },
         body: JSON.stringify({
             email: "sophie.bluel@test.tld",
             password: "S0phie"
@@ -19,5 +25,5 @@
         }
     }).catch(error => {
         console.error(error.message);
-        document.getElementById("errors").innerHTML = "Error: " + error.message;
+        //document.getElementById("errors").innerHTML = "Error: " + error.message;
     })

@@ -36,29 +36,31 @@ const filterDataByHotel = (data) => {
     return data.filter(work => work.categoryId === 3)
 }
 
-const filterByAll = (works) => {
-    document.querySelector(".filterAll").addEventListener("click",  () => {
-        const worksFiltered = filterDataByAll(works);
-        createDOM(worksFiltered);
-    });
-}
+window.addEventListener('DOMContentLoaded', (event) => {
+    const filterByAll = (works) => {
+        document.querySelector(".filterAll").addEventListener("click",  () => {
+            const worksFiltered = filterDataByAll(works);
+            createDOM(worksFiltered);
+        });
+    }
 
-const filterByObject = (works) => {
-    document.querySelector(".filterObject").addEventListener("click",  () => {
-        const worksFiltered = filterDataByObject(works);
-        createDOM(worksFiltered);
-    });
-}
+    const filterByObject = (works) => {
+        document.querySelector(".filterObject").addEventListener("click",  () => {
+            const worksFiltered = filterDataByObject(works);
+            createDOM(worksFiltered);
+        });
+    }
 
-const filterByApartment = (works) => {
-    document.querySelector(".filterAppart").addEventListener("click",  () => {
-        const worksFiltered = filterDataByApartment(works);
-        createDOM(worksFiltered);
-    });
-}
-const filterByHotel = (works) => {
-    document.querySelector(".filterHotel").addEventListener("click",  () => {
-        const worksFiltered = filterDataByHotel(works);
-        createDOM(worksFiltered);
-    });
-}
+    const filterByApartment = (works) => {
+        document.querySelector(".filterAppart").addEventListener("click",  () => {
+            const worksFiltered = filterDataByApartment(works);
+            createDOM(worksFiltered);
+        });
+    }
+    const filterByHotel = (works) => {
+        document.querySelector(".filterHotel").addEventListener("click",  () => {
+            const worksFiltered = filterDataByHotel(works);
+            createDOM(worksFiltered);
+        });
+    }
+})
