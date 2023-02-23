@@ -1,29 +1,74 @@
-window.addEventListener('DOMContentLoaded', (event) => {
-    request(urlAPI, { }).then(response => {
-        createDOM(response);
-        filterByApartment(response);
-        filterByObject(response);
-        filterByAll(response);
-        filterByHotel(response);
+let urlAPI = "http://localhost:5678/api/works";
+let works;
+
+const createDOM = (works) => {
+    const gallery = document.querySelector(".gallery");
+    gallery.innerHTML = "";
+
+    works.forEach((work) => {
+        const figure = document.createElement("figure");
+        const img = document.createElement("img");
+        const figcaption = document.createElement("figcaption");
+
+        img.setAttribute("src", work.imageUrl);
+        img.setAttribute("alt", work.title);
+        img.setAttribute("cross-origin", "anonymous");
+    
+        figcaption.innerHTML = work.title;
+
+        figure.appendChild(img);
+        figure.appendChild(figcaption);
+        gallery.appendChild(figure);
+        console.log(figure);
     })
-})
+};
+
+const filterDataByAll = (data) => {
+    return data.filter(work => work.categoryId === 1 || work.categoryId === 2 || work.categoryId === 3)
+};
+
+const filterDataByObject = (data) => {
+    return data.filter(work => work.categoryId === 1)
+};
+
+const filterDataByApartment = (data) => {
+    return data.filter(work => work.categoryId === 2)
+};
+
+const filterDataByHotel = (data) => {
+    return data.filter(work => work.categoryId === 3)
+};
+
+const filterByAll = (works) => {
+    console.log(works);
+    document.querySelector(".filterAll").addEventListener("click",  () => {
+        console.log("saucisse");
+        const worksFiltered = filterDataByAll(works);
+        createDOM(worksFiltered);
+    });
+};
+
+const filterByObject = (works) => {
+    document.querySelector(".filterObject").addEventListener("click",  () => {
+        console.log("saucisson");
+        const worksFiltered = filterDataByObject(works);
+        createDOM(worksFiltered);
+    });
+};
+
+const filterByApartment = (works) => {
+    document.querySelector(".filterAppart").addEventListener("click",  () => {
+        const worksFiltered = filterDataByApartment(works);
+        createDOM(worksFiltered);
+    });
+};
+
+const filterByHotel = (works) => {
+    document.querySelector(".filterHotel").addEventListener("click",  () => {
+        const worksFiltered = filterDataByHotel(works);
+        createDOM(worksFiltered);
+    });
+};
 
 
 
-    request("http://localhost:5678/api/users/login", {
-        method: 'POST',
-        headers: {
-            'Content-type': 'application/json;charset=utf-8',
-        },
-        body: JSON.stringify({
-            email: "sophie.bluel@test.tld",
-            password: "S0phie"
-        })
-    }).then(response => {
-        if(response.status && response.status === 'ok') {
-            location.href = "index.html";
-        }
-    }).catch(error => {
-        console.error(error.message);
-        //document.getElementById("errors").innerHTML = "Error: " + error.message;
-    })
