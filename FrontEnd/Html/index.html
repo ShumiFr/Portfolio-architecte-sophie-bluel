@@ -8,11 +8,17 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
+	<script src="https://kit.fontawesome.com/6983cb12c1.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
+<div id="top-bar">
+	<i src="../assets/icons/modifier.svg">Mode édition</i>
+	<button>Publier les changements</button>
+</div>
 <header>
-	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+
+	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li>projets</li>
@@ -35,9 +41,22 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="project">
+			<h2>Mes Projets</h2>
+
+			<a href="#modal1" class="js-modal" id="button-modal">Ouvrir la boite modale</a>
+
+			<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal"  aria-modal="false" style="display:none">
+				<div class="modal-wrapper js-modal-stop">
+					<button class="js-modal-close">Fermer la boîte modale</button>
+					<h1 id="titlemodal"></h1>
+				</div>
+			</aside>
+
+		</div>
+
 		<div class="filter">
-			<ul>
+			<ul id="all-filter">
 				<li class="filterAll">Tous</li>
 				<li class="filterObject">Objets</li>
 				<li class="filterAppart">Appartement</li>

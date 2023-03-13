@@ -14,7 +14,7 @@ loginButton.addEventListener("click", function() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    fetch("http://localhost:5678/api/users/login", {
+    request("http://localhost:5678/api/users/login", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -25,18 +25,19 @@ loginButton.addEventListener("click", function() {
         })
     })
         .then(response => {
-            if (response.ok) {
-                alert("Connexion réussie !");
+            console.log(response);
+            if(response.token) {
+                localStorage.setItem('token', response.token);
                 location.href = "index.html";
-
-            } else {
-                alert("Erreur dans l’identifiant ou le mot de passe");
-
+                document.getElementById("top-bar").style.display = "flex";
+            }
+            else {
+                display("E-mail ou mot de passe incorrect.")
             }
         })
         .catch(error => {
             console.error("Erreur : ", error);
-            alert("Une erreur est survenue lors de la connexion.");
+            display("Erreur de connection.")
         });
 });
 
