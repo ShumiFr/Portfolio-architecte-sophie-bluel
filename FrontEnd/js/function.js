@@ -73,37 +73,39 @@ const filterByHotel = (works) => {
 };
 
 //Partie Authentification
+
 if(token) {
+    const modalLinks = document.querySelectorAll(".js-modal")
     document.getElementById("all-filter").style.display = "none";
-    document.getElementById("button-modal").style.display = "flex";
-    console.log("oui");
+    modalLinks.forEach((link) => {
+        link.style.display = "flex";
+
+        let modal = null;
+
+        const openModal = function (e) {
+            e.preventDefault();
+            modal = document.querySelector(e.target.getAttribute('href'));
+            modal.style.display = "flex";
+            modal.removeAttribute('aria-hidden');
+            modal.setAttribute('aria-modal', 'true');
+            modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
+        }
+
+        link.addEventListener('click', openModal);
+
+        const closeModal = function (e) {
+            if (modal === null) return;
+            if (e) {
+                e.preventDefault();
+            }
+            modal.style.display = "none";
+            modal.setAttribute('aria-hidden', 'true');
+            modal.removeAttribute('aria-modal');
+        }
+    });
+
 }else {
     console.log("saucisson");
 }
 
 console.log(sessionStorage);
-
-//Partie Modale
-
-let modal = null;
-
-const openModal = function (e) {
-    e.preventDefault();
-    modal = document.querySelector(e.target.getAttribute('href'));
-    modal.style.display = "flex";
-    modal.removeAttribute('aria-hidden');
-    modal.setAttribute('aria-modal', 'true');
-    modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
-}
-
-const closeModal = function (e) {
-    if (modal === null) return;
-    if (e) {
-        e.preventDefault();
-    }
-    modal.style.display = "none";
-    modal.setAttribute('aria-hidden', 'true');
-    modal.removeAttribute('aria-modal');
-}
-
-document.querySelector('.js-modal').addEventListener('click', openModal);
