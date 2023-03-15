@@ -27,7 +27,7 @@ loginButton.addEventListener("click", function() {
         .then(response => {
             console.log(response);
             if(response.token) {
-                localStorage.setItem('token', response.token);
+                sessionStorage.setItem('token', response.token);
                 location.href = "index.html";
                 document.getElementById("top-bar").style.display = "flex";
             }
