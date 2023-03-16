@@ -2,28 +2,35 @@ let urlAPI = "http://localhost:5678/api/works";
 let works;
 let token =  sessionStorage.getItem("token");
 
+const createProjectHTML = (project) => {
+    const figure = document.createElement("figure");
+    const img = document.createElement("img");
+    const deleteButton = document.createElement("button");
+  
+    img.setAttribute("src", project.imageUrl);
+    img.setAttribute("alt", project.title);
+    img.setAttribute("cross-origin", "anonymous");
+  
+    deleteButton.innerText = "Supprimer";
+    deleteButton.addEventListener("click", () => {
+        // Ajouter ici le code pour supprimer le projet (envoi d'une requête DELETE)
+    });
+  
+    figure.appendChild(img);
+    figure.appendChild(deleteButton);
+  
+    return figure;
+};
 
 //Creation des different travaux
-const createDOM = (works) => {
+const createDOM = (projects) => {
     const gallery = document.querySelector(".gallery");
     gallery.innerHTML = "";
-
-    works.forEach((work) => {
-        const figure = document.createElement("figure");
-        const img = document.createElement("img");
-        const figcaption = document.createElement("figcaption");
-
-        img.setAttribute("src", work.imageUrl);
-        img.setAttribute("alt", work.title);
-        img.setAttribute("cross-origin", "anonymous");
-    
-        figcaption.innerHTML = work.title;
-
-        figure.appendChild(img);
-        figure.appendChild(figcaption);
-        gallery.appendChild(figure);
-        console.log(figure);
-    })
+  
+    projects.forEach((project) => {
+        const projectHTML = createProjectHTML(project);
+        gallery.appendChild(projectHTML);
+    });
 };
 
 //Partie filtre
@@ -72,7 +79,7 @@ const filterByHotel = (works) => {
     });
 };
 
-//Partie Authentification
+//Partie Authentification et Modale
 
 if(token) {
     const modalLinks = document.querySelectorAll(".js-modal")
@@ -89,6 +96,9 @@ if(token) {
             modal.removeAttribute('aria-hidden');
             modal.setAttribute('aria-modal', 'true');
             modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
+
+            // Afficher les projets dans la modal
+            showProjectsInModal();
         }
 
         link.addEventListener('click', openModal);
@@ -103,6 +113,30 @@ if(token) {
             modal.removeAttribute('aria-modal');
         }
     });
+
+    //Mettre les projets dans la modale 
+
+    const showProjectsInModal = () => {
+        fetch(urlAPI)
+        .then((response) => response.json())
+        .then((projects) => {
+            const modalContent = document.querySelector(".modal-content");
+            modalContent.innerHTML = "";
+    
+            projects.forEach((project) => {
+                const projectHTML = createProjectHTML(project);
+                modalContent.appendChild(projectHTML);
+            });
+
+            const addProjectButton = document.createElement("button");
+            addProjectButton.innerText = "Ajouter projet";
+            addProjectButton.addEventListener("click", () => {
+                // Ajouter ici le code pour afficher le formulaire d'ajout de projet
+            });
+
+            modalContent.appendChild(addProjectButton);
+        });
+    };
 
 }else {
     console.log("saucisson");
