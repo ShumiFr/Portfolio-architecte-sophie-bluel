@@ -78,6 +78,11 @@ nav ul {
 	list-style-type: none;
 
 }
+
+nav ul .logout { 
+	display : none
+}
+
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
@@ -256,7 +261,31 @@ footer nav ul {
 	color: red;
 }
 
-/* TOPBAR */
+/* .hidden {
+    display: none !important;
+} */
+
+.edit-button {
+    display: block;
+    padding: 5px 5px 5px 0;
+    margin: 10px 10px 10px 0;
+    cursor: pointer;
+    width: max-content;
+    color: #000000;
+    font-size: 14px;
+    font-family: 'Work Sans';
+    font-weight: normal;
+}
+
+.edit-button:hover {
+    color: #303030;
+}
+
+.edit-button span {
+    margin-left: 5px;
+}
+
+/* TOPBAR
 #top-bar {
 	display: none;
 	align-items: center;
@@ -269,7 +298,7 @@ footer nav ul {
 	margin-right: 20px;
 }
 
-/* PROJECT */
+PROJECT
 
 .project {
 	display: flex;	
@@ -281,9 +310,9 @@ footer nav ul {
 
 .project h2 {
 	margin-right: 15px;
-}
+} 
 
-/* MODALE */
+ MODALE
 
 .modal {
 	display: flex;
@@ -357,4 +386,4 @@ footer nav ul {
 	align-items: center;
 	color: #000000;
 	text-decoration: none;
-}
+} */

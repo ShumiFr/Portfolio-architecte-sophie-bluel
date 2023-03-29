@@ -5,8 +5,6 @@ let getWorksApi = "http://localhost:5678/api/works";
 const gallery = document.querySelector(".gallery");
 const figures = [];
 
-//=======================================================================
-
 //Variables Filtres
 const filters = document.querySelectorAll(".filter ul li");
 const filterAll = document.querySelector(".filterAll");
