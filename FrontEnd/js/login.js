@@ -30,3 +30,4 @@ loginButton.addEventListener("click", function() {
             display("Erreur de connection.")
         });
 });
+
