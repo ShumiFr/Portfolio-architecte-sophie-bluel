@@ -8,8 +8,9 @@ const figures = [];
 //=======================================================================
 
 //Variables Filtres
-const filterAll = document.querySelector(".filterAll")
-const AllFilter = document.querySelectorAll(".filter ul li")
+const filters = document.querySelectorAll(".filter ul li");
+const filterAll = document.querySelector(".filterAll");
+
 
 //Fonctions pour récupérer les travaux de l'Api
 async function getWorks() {
@@ -36,8 +37,31 @@ async function getWorks() {
         }
     }
     catch (error) {
-
     }
 }
 
 getWorks();
+
+//Filtrer les travaux
+for (let filter of filters) {
+    filter.addEventListener("click", function () {
+    for (let e of filters) {
+        e.classList.remove("active")
+    }
+    filter.classList.add("active")
+    });
+}
+
+for (let filter of filters) {
+    filter.addEventListener("click", function () {
+        for ( let figure of figures ) {
+            if (figure.getAttribute("data-category-id") === filter.getAttribute("data-category-id")){
+                figure.style.display="block";
+            }else if ( filter === filterAll) {
+                figure.style.display="block";
+            }else {
+                figure.style.display="none";
+            }
+        }
+    });
+} 
