@@ -88,6 +88,10 @@ nav a {
 	color: black;
 }
 
+nav b { 
+	font-weight: bold
+}
+
 li:hover {
 	color: #B1663C;
 }

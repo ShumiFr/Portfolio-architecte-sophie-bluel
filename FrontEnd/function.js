@@ -7,7 +7,6 @@ const createDOM = (projects) => {
         const figure = document.createElement("figure");
         const img = document.createElement("img");
         const figcaption = document.createElement("figcaption");
-        
 
         img.setAttribute("src", project.imageUrl);
         img.setAttribute("alt", project.title);

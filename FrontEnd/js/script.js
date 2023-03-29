@@ -11,6 +11,7 @@ const figures = [];
 const filters = document.querySelectorAll(".filter ul li");
 const filterAll = document.querySelector(".filterAll");
 
+//=======================================================================
 
 //Fonctions pour récupérer les travaux de l'Api
 async function getWorks() {
