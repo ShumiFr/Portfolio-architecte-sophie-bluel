@@ -15,7 +15,7 @@
 <body>
 	<!-- TOPBAR -->
 	<div class="edition-mode hidden">
-        <p><img class="edit-icon" src="./assets/icons/icon-edit-white.svg" alt="icone edition">Mode édition
+        <p><i class="fa-solid fa-pen-to-square"></i>Mode édition
         </p>
         <button type="submit">Publier les changements</button>
     </div>
@@ -66,20 +66,6 @@
 					<span class="modal-trigger edit-button hidden edit-works"><i class="fa-solid fa-pen-to-square"></i><span>modifier</span>
 					</span>
 				</h2>
-
-				<!-- MODAL
-				<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal"  aria-modal="false" style="display:none">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button class="js-modal-close"><i class="fa-sharp fa-regular fa-xmark"></i></button>
-							<h1 id="titlemodal">Galerie Photo</h1>
-						</div>
-						<div class="modal-gallery">
-						</div>
-					</div>
-				</aside>
-				 MODAL -->
-
 			</div>
 
 			<!-- FILTER -->
@@ -128,6 +114,28 @@
 		</nav>
 	</footer>
 	<!-- FOOTER -->
+	
+	<!-- MODAL TRAVAUX -->
+    <div class="modal-container">
+        <div class="overlay modal-trigger">
+
+        </div>
+        <div class="modal add-works-modal">
+
+        </div>
+        <div class="modal delete-works-modal">
+            <div class="delete-works-modal-header">
+                <i class="fa-sharp fa-solid fa-xmark modal-trigger"></i>
+                <h1>Galerie Photo</h1>
+            </div>
+            <div class="modal-gallery">
+                <!-- Affiche les projets via JS-->
+            </div>
+            <hr>
+            <button cla>Ajouter un projet</button>
+            <button class="button-delete-gallery">Suprimer la gallerie</button>
+        </div>
+    </div>
 
 	<!-- SCRIPT -->
 	<script src="../js/edition-mode.js"></script>

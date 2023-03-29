@@ -41,6 +41,42 @@ body {
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
+
+.edition-mode {
+    width: 100%;
+    height: 50px;
+    background: #000000;
+    position: sticky;
+    z-index: 5;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #b9b9b9;
+}
+
+.edition-mode p {
+    display: flex;
+    margin: 0 7px;
+}
+
+.edition-mode p .edit-icon {
+    width: 15px;
+    margin-right: 5px;
+}
+
+.edition-mode button {
+    background: #f1f1f1;
+    color: #000000;
+    border-radius: 20px;
+    padding: 10px 15px;
+    margin: 0 7px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s all;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
@@ -132,9 +168,21 @@ li:hover {
 	margin-bottom: 0.5em;
 }
 #portfolio h2 {
-	text-align: center;
-	margin-bottom: 1em;
+	width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em;
+    display: flex;
 }
+
+#portfolio h2 .edit-button {
+	color: #000000;
+	font-size: 14px;
+	font-family: 'Work Sans';
+	font-weight: normal;
+	margin: 0 15px;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -285,105 +333,32 @@ footer nav ul {
     margin-left: 5px;
 }
 
-/* TOPBAR
-#top-bar {
-	display: none;
-	align-items: center;
-	justify-content: center;
-	color: #FFFFFF;
-	background-color: #000000;
-	overflow: hidden;
-	width: 100%;
-	height: 60px;
-	margin-right: 20px;
+/* MODALE */
+
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 110vh;
+    z-index: 1;
 }
 
-PROJECT
-
-.project {
-	display: flex;	
-	height: 30px;
-	margin-bottom: 30px;
-    justify-content: center;
-    align-items: baseline;
+.modal-container .overlay {
+    position: absolute;
+    background: #333333d3;
+    width: 100%;
+    height: 100%;
+    cursor: auto;
 }
 
-.project h2 {
-	margin-right: 15px;
-} 
-
- MODALE
-
-.modal {
-	display: flex;
-	flex-direction: column;
-	position: fixed;
-	align-items: center;
-	justify-content: center;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-	grid-column-gap: 20px;
-	grid-row-gap: 20px;
-	background: rgba(0, 0, 0, 0.5);
+.modal-container .modal {
+    position: absolute;
+    width: 575px;
+    height: max-content;
+    background: #ffffff;
+    border-radius: 5px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
-
-.modal h1 {
-	height: 30%;
-}
-
-.modal-header {
-	display: flex;
-	justify-content: center;
-	max-width: calc(100vw - 20px);
-	max-height: calc(100vh - 20px);
-	border-radius: 10px;
-}
-
-.modal-header h1 {
-	font-family: 'Work Sans';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 26px;
-	line-height: 30px;
-	text-align: center;
-	color: #000000;
-}
-
-.modal-content {
-	max-width: calc(100vw - 20px);
-	max-height: calc(100vh - 20px);
-	width: 35%;
-	height: 50%;
-	padding: 20px;
-	border-radius: 10px;
-	background: #FFFFFF;
-}
-
-.modal-gallery {
-	width: 100%;
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-	grid-column-gap: 20px;
-	grid-row-gap: 20px;
-	height: 50%;
-	border-radius: 10px;
-}
-
-.modal-gallery figure {
-	width: 20%;
-	height: 20px;
-}
-
-.modal-gallery figure img {
-	width: 80px;
-	height: 100px;
-}
-
-#button-modal {
-	display: flex;
-	align-items: center;
-	color: #000000;
-	text-decoration: none;
-} */
