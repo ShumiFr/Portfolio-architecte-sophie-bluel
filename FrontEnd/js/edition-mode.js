@@ -54,7 +54,6 @@ for (let button of triggerButtons) {
 }
 
 // Faire apparaitre les projet dans la gallerie de la modale
-
 async function getWorksInModal() {
     try {
         const response = await fetch(getWorksApi); //Travaux virtuel
@@ -106,7 +105,7 @@ async function deleteWorks(workId) {
             let figures = document.querySelectorAll("figure");
             for (let figure of figures) {
                 if (figure.getAttribute("data-id") === workId) {
-                    figure.remove;
+                    figure.remove();
                 }
             }
         }
