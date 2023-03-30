@@ -2,12 +2,12 @@
 let getWorksApi = "http://localhost:5678/api/works";
 
 //Variables Travaux
-const gallery = document.querySelector(".gallery");
+const gallery = document.querySelector(".gallery-grid");
 const figures = [];
 
 //Variables Filtres
 const filters = document.querySelectorAll(".filter ul li");
-const filterAll = document.querySelector(".filterAll");
+const elementsFilter = document.querySelector(".elements-filter");
 
 //=======================================================================
 
@@ -56,7 +56,7 @@ for (let filter of filters) {
         for ( let figure of figures ) {
             if (figure.getAttribute("data-category-id") === filter.getAttribute("data-category-id")){
                 figure.style.display="block";
-            }else if ( filter === filterAll) {
+            }else if ( filter === elementsFilter) {
                 figure.style.display="block";
             }else {
                 figure.style.display="none";
