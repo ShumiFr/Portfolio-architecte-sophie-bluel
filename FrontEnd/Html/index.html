@@ -29,7 +29,7 @@
 				<li><a href="#portfolio">projets</a></li>
 				<li><a href="#contact">contact</a></li>
 				<li class="login"><a href="loginScreen.html">login</a></li>
-				<li class="logout"><a href="loginScreen.html">logout</a></li>
+				<li class="logout hidden">logout</a></li>
 				<li><a href="https://www.instagram.com/" target="_blank"><img src="../assets/icons/instagram.png" alt="Instagram"></a></li>
 			</ul>
 		</nav>
@@ -117,22 +117,24 @@
 	
 	<!-- MODAL TRAVAUX -->
     <div class="modal-container">
-        <div class="overlay modal-trigger">
+        <div class="overlay modal-trigger"></div>
 
-        </div>
+		<!-- Ajouter des travaux -->
         <div class="modal add-works-modal">
 
         </div>
+
+		<!-- Supprimer des travaux -->
         <div class="modal delete-works-modal">
             <div class="delete-works-modal-header">
                 <i class="fa-sharp fa-solid fa-xmark modal-trigger"></i>
-                <h1>Galerie Photo</h1>
+                <h3>Galerie Photo</h3>
             </div>
             <div class="modal-gallery">
                 <!-- Affiche les projets via JS-->
             </div>
             <hr>
-            <button cla>Ajouter un projet</button>
+            <button class="button-add-work">Ajouter un projet</button>
             <button class="button-delete-gallery">Suprimer la gallerie</button>
         </div>
     </div>

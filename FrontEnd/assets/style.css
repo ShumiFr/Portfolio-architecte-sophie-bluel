@@ -131,6 +131,7 @@ h2{
 	color: #1D6154
 }
 
+/* Navigation */
 nav ul {
 	display: flex;
 	align-items: center;
@@ -138,13 +139,13 @@ nav ul {
 
 }
 
-nav ul .logout { 
-	display : none
-}
-
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+}
+
+nav li .logout:hover {
+	cursor: pointer;
 }
 
 nav a {
@@ -381,11 +382,12 @@ footer nav ul {
     margin-left: 5px;
 }
 
-/* .hidden {
+.hidden {
     display: none !important;
-} */
+}
 
 .modal-container {
+	display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -393,6 +395,11 @@ footer nav ul {
     height: 110vh;
     z-index: 1;
 }
+
+.modal-container.modal-active {
+	display: block !important;
+}
+
 
 .modal-container .overlay {
     position: absolute;

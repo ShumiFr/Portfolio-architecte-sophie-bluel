@@ -7,9 +7,80 @@ const logout = document.querySelector(".logout");
 const hiddenElements = document.querySelectorAll(".hidden");
 
 // Variables pour les modales :
-const modalContainer = document.querySelectorAll(".modal-container");
+const modalContainer = document.querySelector(".modal-container");
 const triggerButtons = document.querySelectorAll(".modal-trigger");
 const deleteWorksModal = document.querySelector(".delete-works-modal");
 const addWorksModal = document.querySelector(".add-works-modal");
 const allowedExtensions = ["jpg", ".jpeg", ".png"];
 const maxFileSize = 4 * 1024 * 1024; //4Mo
+
+//Variables gestion des travaux 
+const modalGallery = document.querySelector(".modal-gallery");
+const addWorkButton = document.querySelector(".button-add-work");
+const deleteAllWorksButton = document.querySelector(".button-delete-gallery");
+
+//========================================================================
+
+//Identification du token pour afficher le mode édition
+if (userToken) {
+    for (let element of hiddenElements) {
+        element.classList.remove("hidden");
+    }
+    login.style.display = "none";
+}
+
+//  Modale de déconnexion
+logout.addEventListener("click", function () {
+    sessionStorage.removeItem("token");
+    for (let element of hiddenElements) {
+        element.classList.add("hidden");
+    }
+    login.style.display = "block";
+    location.href = "index.html";
+});
+
+// Faire apparaître et disparaitre les modales grâce aux boutons déclencheurs
+for (let button of triggerButtons) {
+    button.addEventListener("click", function () {
+        if (modalContainer.classList.contains("modal-active")) {
+            modalContainer.classList.remove("modal-active");
+            getWorksInModal();
+        }else {
+            modalContainer.classList.add("modal-active");
+        }
+    })
+}
+
+// Faire apparaitre les projet dans la gallerie de la modale
+
+async function getWorksInModal() {
+    try {
+        const response = await fetch(getWorksApi); //Travaux virtuel
+        const data = await response.json(); // Travaux sous forme d'objets manipulables
+
+        for (let i in data) {
+            const figure = document.createElement("figure");
+            const img = document.createElement("img");
+            const figcaption = document.createElement("figcaption");
+            const deleteWork = document.createElement("i");
+
+            figure.setAttribute("data-category-id", data[i].category.id)
+            figure.setAttribute("data-id", data[i].id)
+            img.setAttribute("src", data[i].imageUrl);
+            img.setAttribute("alt", data[i].title);
+            img.setAttribute("crossorigin", "anonymous");
+            figcaption.innerHTML = "Editer";
+            deleteWork.classList.add("fa-solid", "fa-trash-can");
+
+            figure.append(img, figcaption, deleteWork);
+            modalGallery.append(figure);
+
+            figures.push(figure); //On push chaque figure dans le tableau figures de manière à pouvoir utiliser chaque figure à l'exterieur de la boucle
+        }
+    }
+    catch (error) {
+    }
+}
+
+
+
