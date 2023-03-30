@@ -1,4 +1,4 @@
-//Déclarations des variables 
+//Déclarations des variables
 
 // Variables login, logout & mode edition
 const userToken = sessionStorage.getItem("token");
@@ -14,41 +14,43 @@ const addWorksModal = document.querySelector(".add-works-modal");
 const allowedExtensions = ["jpg", ".jpeg", ".png"];
 const maxFileSize = 4 * 1024 * 1024; //4Mo
 
-//Variables gestion des travaux 
+//Variables gestion des travaux
 const modalGallery = document.querySelector(".modal-gallery");
-const addWorkButton = document.querySelector(".button-add-work");
-const deleteAllWorksButton = document.querySelector(".button-delete-gallery");
+const addWorksButton = document.querySelector(".add-works-button");
+const deleteAllWorksButton = document.querySelector(".delete-all-works-button");
+const trashIcons = [];
 
 //========================================================================
 
 //Identification du token pour afficher le mode édition
 if (userToken) {
-    for (let element of hiddenElements) {
-        element.classList.remove("hidden");
-    }
-    login.style.display = "none";
+  for (let element of hiddenElements) {
+    element.classList.remove("hidden");
+  }
+  login.style.display = "none";
 }
 
 //  Modale de déconnexion
 logout.addEventListener("click", function () {
+  if (confirm("Êtes-vous sûr(e) de vouloir vous deconnecter ?")) {
     sessionStorage.removeItem("token");
     for (let element of hiddenElements) {
-        element.classList.add("hidden");
+      element.classList.add("hidden");
     }
     login.style.display = "block";
     location.href = "index.html";
+  } 
 });
 
 // Faire apparaître et disparaitre les modales grâce aux boutons déclencheurs
 for (let button of triggerButtons) {
-    button.addEventListener("click", function () {
-        if (modalContainer.classList.contains("modal-active")) {
-            modalContainer.classList.remove("modal-active");
-            getWorksInModal();
-        }else {
-            modalContainer.classList.add("modal-active");
-        }
-    })
+  button.addEventListener("click", function () {
+    if (modalContainer.classList.contains("modal-active")) {
+      modalContainer.classList.remove("modal-active");
+    } else {
+      modalContainer.classList.add("modal-active");
+    }
+  });
 }
 
 // Faire apparaitre les projet dans la gallerie de la modale
@@ -62,25 +64,62 @@ async function getWorksInModal() {
             const figure = document.createElement("figure");
             const img = document.createElement("img");
             const figcaption = document.createElement("figcaption");
-            const deleteWork = document.createElement("i");
+            const trashIconZone = document.createElement("div")
+            const trashIcon = document.createElement("i");
 
-            figure.setAttribute("data-category-id", data[i].category.id)
-            figure.setAttribute("data-id", data[i].id)
+            figure.setAttribute("data-category-id", data[i].category.id);
+            figure.setAttribute("data-id", data[i].id);
             img.setAttribute("src", data[i].imageUrl);
             img.setAttribute("alt", data[i].title);
             img.setAttribute("crossorigin", "anonymous");
+            trashIcon.setAttribute("data-id", data[i].id);
             figcaption.innerHTML = "Editer";
-            deleteWork.classList.add("fa-solid", "fa-trash-can");
+            trashIconZone.classList.add("trash-zone")
+            trashIcon.classList.add("fa-solid", "fa-trash-can", "trash-icon");
 
-            figure.append(img, figcaption, deleteWork);
+            trashIconZone.append(trashIcon)
+            figure.append(img, figcaption, trashIconZone);
             modalGallery.append(figure);
 
-            figures.push(figure); //On push chaque figure dans le tableau figures de manière à pouvoir utiliser chaque figure à l'exterieur de la boucle
+            trashIcons.push(trashIcon);
+        }
+        deleteWorksInit();
+    } catch (error) {}
+};
+
+getWorksInModal();
+
+async function deleteWorks(workId) {
+    const fetchInit = {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${userToken}`,
+        },
+    };
+    try {
+        const response = await fetch(
+            `http://localhost:5678/api/works/${workId}`,
+            fetchInit
+        );
+
+        if (response.ok){
+            let figures = document.querySelectorAll("figure");
+            for (let figure of figures) {
+                if (figure.getAttribute("data-id") === workId) {
+                    figure.remove;
+                }
+            }
         }
     }
-    catch (error) {
+    catch {
     }
 }
 
-
-
+function deleteWorksInit() {
+    for (let e of trashIcons) {
+        e.addEventListener("click", function (){
+            const workId = e.getAttribute("data-id"); 
+            deleteWorks(workId);
+        })
+    }
+}

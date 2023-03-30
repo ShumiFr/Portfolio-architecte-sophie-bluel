@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Sophie Bluel - Architecte d'intérieur</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
+		rel="stylesheet">
 	<meta name="description" content="">
 	<script src="https://kit.fontawesome.com/6983cb12c1.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="../assets/style.css">
@@ -15,10 +17,10 @@
 <body>
 	<!-- TOPBAR -->
 	<div class="edition-mode hidden">
-        <p><i class="fa-solid fa-pen-to-square"></i>Mode édition
-        </p>
-        <button type="submit">Publier les changements</button>
-    </div>
+		<p><i class="fa-solid fa-pen-to-square edit-icon"></i>Mode édition
+		</p>
+		<button type="submit">Publier les changements</button>
+	</div>
 	<!-- TOPBAR -->
 
 	<!-- HEADER -->
@@ -29,8 +31,9 @@
 				<li><a href="#portfolio">projets</a></li>
 				<li><a href="#contact">contact</a></li>
 				<li class="login"><a href="loginScreen.html">login</a></li>
-				<li class="logout hidden">logout</a></li>
-				<li><a href="https://www.instagram.com/" target="_blank"><img src="../assets/icons/instagram.png" alt="Instagram"></a></li>
+				<li class="logout"><a href="loginScreen.html">logout</a></li>
+				<li><a href="https://www.instagram.com/" target="_blank"><img src="../assets/icons/instagram.png"
+							alt="Instagram"></a></li>
 			</ul>
 		</nav>
 	</header>
@@ -43,18 +46,22 @@
 			<figure>
 				<img src="../assets/images/sophie-bluel.png" alt="">
 				<figcaption>
-                    <span class="edit-button hidden"><i class="fa-solid fa-pen-to-square"></i><span>modifier</span>
-                    </span>
-                </figcaption>
+					<span class="edit-button hidden"><i class="fa-solid fa-pen-to-square"></i><span>modifier</span>
+					</span>
+				</figcaption>
 			</figure>
 			<article>
 				<h2>
-                    <span class="edit-button hidden"><i class="fa-solid fa-pen-to-square"></i><span>modifier</span>
-                    </span><span class="title">Designer d'espace</span>
-                </h2>
-				<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
-				<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
-				<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
+					<span class="edit-button hidden"><i class="fa-solid fa-pen-to-square"></i><span>modifier</span>
+					</span><span class="title">Designer d'espace</span>
+				</h2>
+				<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison
+					finale du chantier.</p>
+				<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les
+					couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du
+					chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
+				<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG,
+					décorateur(trice)</p>
 			</article>
 		</section>
 		<!-- INTRODUCTION -->
@@ -63,27 +70,28 @@
 		<section id="portfolio">
 			<div class="project">
 				<h2><span class="title">Mes Projets</span>
-					<span class="modal-trigger edit-button hidden edit-works"><i class="fa-solid fa-pen-to-square"></i><span>modifier</span>
+					<span class="modal-trigger edit-button hidden edit-works"><i
+							class="fa-solid fa-pen-to-square"></i><span>modifier</span>
 					</span>
 				</h2>
 			</div>
 
 			<!-- FILTER -->
-            <div class="filter">
-                <ul>
-                    <li class="filterAll active">Tous</li>
-                    <li data-category-id="1">Objets</li>
-                    <li data-category-id="2">Appartement</li>
-                    <li data-category-id="3">Hôtels & Restaurants</li>
-                </ul>
-            </div>
-            <!-- FILTER -->
+			<div class="filter">
+				<ul>
+					<li class="filterAll active">Tous</li>
+					<li data-category-id="1">Objets</li>
+					<li data-category-id="2">Appartement</li>
+					<li data-category-id="3">Hôtels & Restaurants</li>
+				</ul>
+			</div>
+			<!-- FILTER -->
 
 			<!-- GALLERY -->
 			<div class="gallery">
 			</div>
 			<!-- GALLERY -->
-			
+
 		</section>
 		<!-- PORTFOLIO -->
 
@@ -114,34 +122,62 @@
 		</nav>
 	</footer>
 	<!-- FOOTER -->
-	
+
 	<!-- MODAL TRAVAUX -->
-    <div class="modal-container">
-        <div class="overlay modal-trigger"></div>
+	<div class="modal-container">
+		<div class="overlay modal-trigger">
 
+		</div>
 		<!-- Ajouter des travaux -->
-        <div class="modal add-works-modal">
+		<div class="modal add-works-modal modal-hidden">
+			<div class="modal-header">
+				<i class="fa-sharp fa-solid fa-xmark modal-trigger"></i>
+				<i class="fa-sharp fa-solid fa-xmark modal-trigger"></i>
 
-        </div>
+			</div>
+			<h1>Galerie Photo</h1>
+			
+				<div class="upload-image-zone">
+					<img class="hidden-to-preview" src="../assets/icons/picture.svg" alt="icone photo">
+					<label title="Ajouter une photo" class="hidden-to-preview special" for="file-input">+ Ajouter
+						photo</label>
+					<input type="file" id="file-input" class="image-input" name="fileInput">
+					<p class="hidden-to-preview">jpg, png : 4mo max</p>
+				</div>
+				<form method="POST" class="upload-edit-gallery">
+				<label for="title-input">Titre</label>
+				<input type="text" name="title" id="title-input">
+				<label for="categories">Catégorie</label>
+
+				<select name="categories" id="categories">
+					<option value="no-value" disabled selected>Sélectionner une catégorie</option>
+					<!-- Via API -->
+				</select>
+				<hr>
+				<button type="submit" class="btn-submit-1 confirm-add-work-button">Valider</button>
+			</form>
+		</div>
 
 		<!-- Supprimer des travaux -->
-        <div class="modal delete-works-modal">
-            <div class="delete-works-modal-header">
-                <i class="fa-sharp fa-solid fa-xmark modal-trigger"></i>
-                <h3>Galerie Photo</h3>
-            </div>
-            <div class="modal-gallery">
-                <!-- Affiche les projets via JS-->
-            </div>
-            <hr>
-            <button class="button-add-work">Ajouter un projet</button>
-            <button class="button-delete-gallery">Suprimer la gallerie</button>
-        </div>
-    </div>
+		<div class="modal delete-works-modal">
+			<div class="modal-header">
+				<i class="fa-sharp fa-solid fa-xmark modal-trigger"></i>
+			</div>
+			<h1>Galerie Photo</h1>
+			<div class="modal-gallery">
+				<!-- Affiche les projets via JS-->
+			</div>
+			<hr>
+			<button class="add-works-button">Ajouter un projet</button>
+			<button class="button-delete-gallery">Suprimer la gallerie</button>
+		</div>
+	</div>
 
 	<!-- SCRIPT -->
-	<script src="../js/edition-mode.js"></script>
+
 	<script src="../js/script.js"></script>
+	<script src="../js/edition-mode.js"></script>
 
 </body>
+
 </html>

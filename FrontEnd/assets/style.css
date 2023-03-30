@@ -131,7 +131,6 @@ h2{
 	color: #1D6154
 }
 
-/* Navigation */
 nav ul {
 	display: flex;
 	align-items: center;
@@ -142,10 +141,6 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
-}
-
-nav li .logout:hover {
-	cursor: pointer;
 }
 
 nav a {
@@ -387,19 +382,18 @@ footer nav ul {
 }
 
 .modal-container {
-	display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 110vh;
     z-index: 1;
+	display: none;
 }
 
 .modal-container.modal-active {
 	display: block !important;
 }
-
 
 .modal-container .overlay {
     position: absolute;
@@ -418,6 +412,154 @@ footer nav ul {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 15px;
+}
+.modal-container .modal.modal-hidden{
+	display: none;
+}
+
+.modal-container .modal .modal-header{
+	display: flex;
+    width: 100%;
+    justify-content: right;
+    align-items: center;
+}
+
+.modal-container .modal .modal-header i{
+    padding: 10px 15px;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.modal-container .modal .modal-gallery {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-column-gap: 7px;
+    grid-row-gap: 10px;
+    width: 65%;
+}
+
+.modal-container .modal .modal-gallery figure {
+    width: 100%;
+    height: 80%;
+    position: relative;
+}
+
+.modal-container .modal .modal-gallery figure img {
+    width: 100%;
+    height: 102px;
+    object-fit: cover;
+}
+
+.modal-container .modal .modal-gallery figure .trash-zone {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #000000;
+    border-radius: 2px;
+    height: 17px;
+    width: 17px;
+}
+
+.modal-container .modal .modal-gallery figure .trash-zone .trash-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10px;
+    cursor: pointer;
+	color: #FFFFFF;
+}
+
+.modal-container .modal .modal-gallery figure figcaption {
+    padding: 3px 0 5px;
+    cursor: pointer;
+}
+
+.modal-container .modal hr {
+    background: #B3B3B3;
+    height: 1px;
+    width: 70%;
+    margin: 40px 0 25px;
+}
+
+.modal-container .modal button {
+    border: #ffffff solid 1px;
+    padding: 12px 60px;
+    border-radius: 30px;
+    margin: 5px;
+    background: #1D6154;
+    color: #ffffff;
+    cursor: pointer;
+    transition: 0.3s all;
+    font-family: 'Syne';
+}
+
+.modal-container .modal .button-delete-gallery{
+    background: #ffffff;
+    color: #D65353;
+    padding: 12px 15px;
+}
+
+.modal-container .modal .button-delete-gallery:hover {
+    background: #ffffff;
+    color: #ff4444;
+}
+
+
+/* modal d'ajout */
+.modal-container .modal.add-works-modal .modal-header{
+	display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.modal-container .modal.add-works-modal .upload-image-zone {
+    background-color: #E8F1F6;
+    width: 62%;
+    height: max-content;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin: 10px 0;
+    position: relative;
+}
+
+.modal-container .modal.add-works-modal form {
+    display: flex;
+    flex-direction: column;
+    width: 67%;
+}
+
+.modal-container .modal.add-works-modal form label {
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.modal-container .modal.add-works-modal form input {
+    background: #ffffff;
+    height: 10%;
+    padding: 10px;
+    outline-color: #8EAFA6;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.modal-container .modal.add-works-modal form select {
+    outline-color: #8EAFA6;
+    padding: 12px;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.modal-container .modal.modal.add-works-modal hr {
+    width: 100%;
 }
 
 

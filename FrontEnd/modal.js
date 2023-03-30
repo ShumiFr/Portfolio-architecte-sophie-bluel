@@ -1,97 +1,86 @@
-//Declaration des variables
-let urlAPI = "http://localhost:5678/api/works";
-let token =  sessionStorage.getItem("token");
-let projects;
+//Déclarations des variables
 
-//Récupération des données depuis l'API
-fetch(urlAPI, {
-    headers: {
-        "Authorization": "Bearer " + token
-    }
-})
-.then(response => response.json())
-.then(data => {
-    //Assigner les données à la variable projects
-    projects = data;
-    //Afficher les projets dans la modale
-    createProjectModal(projects);
-})
-.catch(error => console.error(error));
+// Variables login, logout & mode edition
+const userToken = sessionStorage.getItem("token");
+const login = document.querySelector(".login");
+const logout = document.querySelector(".logout");
+const hiddenElements = document.querySelectorAll(".hidden");
 
-//Fonction pour afficher et supprimer les projets dans la modale
-const createProjectModal = (projects) => {
-    let modalGallery = document.querySelector(".modal-gallery")
-    modalGallery.innerHTML = "";
-    projects.forEach((project) => {
-        const figure = document.createElement("figure");
-        const img = document.createElement("img");
-        const figcaption = document.createElement("figcaption");
-        const categoryId = document.createElement("p");
-        const deleteWork = document.createElement("i");
+// Variables pour les modales :
+const modalContainer = document.querySelector(".modal-container");
+const triggerButtons = document.querySelectorAll(".modal-trigger");
+const deleteWorksModal = document.querySelector(".delete-works-modal");
+const addWorksModal = document.querySelector(".add-works-modal");
+const allowedExtensions = ["jpg", ".jpeg", ".png"];
+const maxFileSize = 4 * 1024 * 1024; //4Mo
 
-        img.setAttribute("src", project.imageUrl);
-        figcaption.setAttribute("alt", project.title);
-        figcaption.textContent = "Editer";
-        categoryId.setAttribute("src", project.id)
-        deleteWork.classList.add("fa-solid", "fa-trash-can");
-        figure.append(img, figcaption, deleteWork);
-        modalGallery.append(figure);
+//Variables gestion des travaux
+const modalGallery = document.querySelector(".modal-gallery");
+const addWorksButton = document.querySelector(".add-works-button");
+const deleteAllWorksButton = document.querySelector(".delete-all-works-button");
 
-        deleteWork.addEventListener("click", function () {
-            fetch(urlAPI + "/" + project.id, {
-                method: "DELETE",
-                headers: {
-                    "Authorization": "Bearer " + token
-                }
-            })
-            .then(data => 
-                {
-                    deleteWork.parentNode.remove();
-                    document.querySelector(`.project-${project.id}`).remove();
-                }) 
-            .catch(error => console.error(error));
-        })
-    })
-};
+//========================================================================
 
-// Si l'utilisateur est authentifié, affiche les liens pour ouvrir la modale
-if(token) {
-    const modalLinks = document.querySelectorAll(".js-modal")
-    document.getElementById("all-filter").style.display = "none";
-    modalLinks.forEach((link) => {
-        link.style.display = "flex";
-
-        let modal = null;
-        
-        //Fonction pour ouvrir la modale
-        const openModal = function (e) {
-            e.preventDefault();
-            modal = document.querySelector(e.target.getAttribute('href'));
-            modal.style.display = "flex";
-            modal.removeAttribute('aria-hidden');
-            modal.setAttribute('aria-modal', 'true');
-            modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
-
-            // Afficher les projets dans la modal
-            createProjectModal(projects);
-        }
-
-        link.addEventListener('click', openModal);
-        
-        //Fonction pour fermer la modale
-        const closeModal = function (e) {
-            if (modal === null) return;
-            if (e) {
-                e.preventDefault();
-            }
-            modal.style.display = "none";
-            modal.setAttribute('aria-hidden', 'true');
-            modal.removeAttribute('aria-modal');
-        }
-    });
-
-}else {
-    console.log("Vous n'êtes pas admin");
+//Identification du token pour afficher le mode édition
+if (userToken) {
+  for (let element of hiddenElements) {
+    element.classList.remove("hidden");
+  }
+  login.style.display = "none";
 }
 
-console.log(sessionStorage);
+//  Modale de déconnexion
+logout.addEventListener("click", function () {
+  if (confirm("Êtes-vous sûr(e) de vouloir vous deconnecter ?")) {
+    sessionStorage.removeItem("token");
+    for (let element of hiddenElements) {
+      element.classList.add("hidden");
+    }
+    login.style.display = "block";
+    location.href = "index.html";
+  } 
+});
+
+// Faire apparaître et disparaitre les modales grâce aux boutons déclencheurs
+for (let button of triggerButtons) {
+  button.addEventListener("click", function () {
+    if (modalContainer.classList.contains("modal-active")) {
+      modalContainer.classList.remove("modal-active");
+    } else {
+      modalContainer.classList.add("modal-active");
+    }
+  });
+}
+
+// Faire apparaitre les projet dans la gallerie de la modale
+
+async function getWorksInModal() {
+  try {
+    const response = await fetch(getWorksApi); //Travaux virtuel
+    const data = await response.json(); // Travaux sous forme d'objets manipulables
+
+    for (let i in data) {
+      const figure = document.createElement("figure");
+      const img = document.createElement("img");
+      const figcaption = document.createElement("figcaption");
+      const trashIconZone = document.createElement("div")
+      const trashIcon = document.createElement("i");
+
+      figure.setAttribute("data-category-id", data[i].category.id);
+      figure.setAttribute("data-id", data[i].id);
+      img.setAttribute("src", data[i].imageUrl);
+      img.setAttribute("alt", data[i].title);
+      img.setAttribute("crossorigin", "anonymous");
+      figcaption.innerHTML = "Editer";
+      trashIconZone.classList.add("trash-zone")
+      trashIcon.classList.add("fa-solid", "fa-trash-can", "trash-icon");
+
+      trashIconZone.append(trashIcon)
+      figure.append(img, figcaption, trashIconZone);
+      modalGallery.append(figure);
+
+      figures.push(figure); //On push chaque figure dans le tableau figures de manière à pouvoir utiliser chaque figure à l'exterieur de la boucle
+    }
+  } catch (error) {}
+}
+getWorksInModal();
