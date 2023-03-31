@@ -28,6 +28,7 @@ const previewImage = document.querySelector(".preview-image");
 const hiddenPreviewElements = document.querySelectorAll(".hidden-to-preview");
 const confirmAddWorkButton = document.querySelector(".confirm-add-work-button");
 const formAddWorks = document.querySelector(".form-add-works");
+const filter = document.querySelector(".filter");
 //========================================================================
 
 //Identification du token pour afficher le mode édition
@@ -37,6 +38,7 @@ if (userToken) {
   }
   login.style.display = "none";
   logout.style.display = "block";
+  filter.style.display = "none";
 }
 
 //  Modale de déconnexion
@@ -216,6 +218,9 @@ inputImage.addEventListener("change", function () {
 
 // Donner la classe completed lorsque les champs sont remplis
 function updateConfirmButton() {
+  console.log(inputTitle.value.trim() !== "" &&
+  select.value !== "no-value" &&
+  inputImage.value !== "")
   if (
     inputTitle.value.trim() !== "" &&
     select.value !== "no-value" &&

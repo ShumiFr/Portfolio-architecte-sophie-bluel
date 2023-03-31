@@ -600,3 +600,10 @@ footer nav ul {
 .modal-container .modal.modal.add-works-modal button.completed {
     background: #1D6154;
 }
+
+h3 {
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 30px;
+    text-align: center;
+}
