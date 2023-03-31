@@ -227,7 +227,8 @@ li:hover {
 
 .gallery img {
     width: 100%;
-
+    height: 407px;
+    object-fit: cover;
 }
 
 /* Contact */
@@ -540,6 +541,26 @@ footer nav ul {
 
 .modal-container .modal.add-works-modal .upload-image-zone .preview-image{
     display: none;
+    height: 100%;
+    width: 50%;
+    object-fit: cover;
+    position: absolute;
+}
+
+.modal-container .modal.add-works-modal .upload-image-zone label{
+    background-color: #CBD6DC;
+    color: #306685;
+    border: none;
+    margin: 10px 0;
+    padding: 10px 30px;
+    border-radius: 20px;
+    z-index: 5;
+    cursor: pointer
+}
+
+.modal-container .modal.add-works-modal .upload-image-zone input{
+    position: absolute;
+    opacity: 0;
 }
 
 
@@ -570,4 +591,12 @@ footer nav ul {
 
 .modal-container .modal.modal.add-works-modal hr {
     width: 100%;
+}
+
+.modal-container .modal.modal.add-works-modal button {
+    background: #A7A7A7;
+}
+
+.modal-container .modal.modal.add-works-modal button.completed {
+    background: #1D6154;
 }

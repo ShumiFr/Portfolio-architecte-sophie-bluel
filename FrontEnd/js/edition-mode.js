@@ -1,5 +1,5 @@
 //Déclarations des variables
-let allFigures = document.querySelectorAll("figure");
+
 // Variables login, logout & mode edition
 const userToken = sessionStorage.getItem("token");
 const login = document.querySelector(".login");
@@ -19,11 +19,13 @@ const modalGallery = document.querySelector(".modal-gallery");
 const addWorksButton = document.querySelector(".add-works-button");
 const deleteAllWorksButton = document.querySelector(".button-delete-gallery");
 const backButton = document.querySelector(".back-button");
+const modalFigures = [];
 const trashIcons = [];
 const select = document.querySelector("select");
 const inputImage = document.querySelector(".image-input");
 const inputTitle = document.querySelector("#title-input");
 const previewImage = document.querySelector(".preview-image");
+const hiddenPreviewElements = document.querySelectorAll(".hidden-to-preview");
 const confirmAddWorkButton = document.querySelector(".confirm-add-work-button");
 const formAddWorks = document.querySelector(".form-add-works");
 //========================================================================
@@ -65,8 +67,8 @@ for (let button of triggerButtons) {
 // Faire apparaitre les projet dans la gallerie de la modale
 async function getWorksInModal() {
   try {
-   response = await fetch(getWorksApi); //Travaux virtuel
-   data = await response.json(); // Travaux sous forme d'objets manipulables
+    response = await fetch(getWorksApi); //Travaux virtuel
+    data = await response.json(); // Travaux sous forme d'objets manipulables
 
     for (let i in data) {
       const figure = document.createElement("figure");
@@ -90,6 +92,7 @@ async function getWorksInModal() {
       modalGallery.append(figure);
 
       trashIcons.push(trashIcon);
+      modalFigures.push(figure)
     }
     deleteWorksInit();
   } catch (error) {
@@ -114,11 +117,7 @@ async function deleteWorks(workId) {
     );
 
     if (response.ok) {
-      for (let figure of allFigures) {
-        if (figure.getAttribute("data-id") === workId) {
-          figure.remove();
-        }
-      }
+      console.log("projet supprimé");
     }
   } catch (error) {
     console.error(error);
@@ -127,24 +126,33 @@ async function deleteWorks(workId) {
 
 // Pour un travail
 function deleteWorksInit() {
-  for (let e of trashIcons) {
-    e.addEventListener("click", function () {
-      const workId = e.getAttribute("data-id");
+  for (let trashIcon of trashIcons) {
+    trashIcon.addEventListener("click", function () {
+      const workId = trashIcon.getAttribute("data-id");
       deleteWorks(workId);
+      for (let figure of modalFigures) {
+        if (figure.getAttribute("data-id") === workId) {
+          figure.remove();
+        }
+      }
+      for (let figure of figures) {
+        if (figure.getAttribute("data-id") === workId) {
+          figure.remove();
+        }
+      }
     });
   }
 
   // Pour tous les travaux
   deleteAllWorksButton.addEventListener("click", async function () {
     if (confirm("Êtes-vous sûr de vouloir supprimer tous les travaux ?")) {
-        for (let i in data) {
-          const workId = data[i].id;
-          deleteWorks(workId);
-        }
-        gallery.innerHTML = "";
-        modalGallery.innerHTML = "";
-        
-      } 
+      for (let i in data) {
+        const workId = data[i].id;
+        deleteWorks(workId);
+      }
+      gallery.innerHTML = "";
+      modalGallery.innerHTML = "";
+    }
   });
 }
 
@@ -183,13 +191,22 @@ getCategories();
 inputImage.addEventListener("change", function () {
   const file = inputImage.files[0];
 
+  if (!allowedExtensions.some((e) => file.name.toLowerCase().endsWith(e))) {
+    alert(`Veuillez mettre une image "jpg" ou "png"`);
+    return;
+  }
+
+  if (file.size > maxFileSize) {
+    alert("Image trop volumineuse !");
+    return;
+  }
+
   let reader = new FileReader();
   reader.readAsDataURL(inputImage.files[0]);
   reader.addEventListener("load", function () {
     previewImage.src = reader.result;
   });
 
-  const hiddenPreviewElements = document.querySelectorAll(".hidden-to-preview");
   for (let e of hiddenPreviewElements) {
     e.style.visibility = "hidden";
   }
@@ -254,6 +271,20 @@ formAddWorks.addEventListener("submit", async function (event) {
 
         figure.append(img, figcaption);
         gallery.append(figure);
+
+        modalGallery.innerHTML = "";
+        getWorksInModal();
+        
+        inputTitle.value = "";
+        inputImage.value = "";
+        select.value = "no-value";
+        previewImage.src= "";
+      
+        for (let e of hiddenPreviewElements) {
+          e.style.visibility = "visible";
+        }
+
+        alert("Le projet a bien été ajouté !");
       }
     } catch (error) {
       console.error(error);
