@@ -18,7 +18,14 @@ const maxFileSize = 4 * 1024 * 1024; //4Mo
 const modalGallery = document.querySelector(".modal-gallery");
 const addWorksButton = document.querySelector(".add-works-button");
 const deleteAllWorksButton = document.querySelector(".delete-all-works-button");
-
+const backButton = document.querySelector(".back-button");
+const trashIcons = [];
+const select = document.querySelector("select");
+const inputImage = document.querySelector(".image-input");
+const inputTitle = document.querySelector("#title-input");
+const previewImage = document.querySelector(".preview-image");
+const confirmAddWorkButton = document.querySelector(".confirm-add-work-button");
+const formAddWorks = document.querySelector(".form-add-works");
 //========================================================================
 
 //Identification du token pour afficher le mode édition
@@ -27,6 +34,7 @@ if (userToken) {
     element.classList.remove("hidden");
   }
   login.style.display = "none";
+  logout.style.display = "block";
 }
 
 //  Modale de déconnexion
@@ -38,7 +46,7 @@ logout.addEventListener("click", function () {
     }
     login.style.display = "block";
     location.href = "index.html";
-  } 
+  }
 });
 
 // Faire apparaître et disparaitre les modales grâce aux boutons déclencheurs
@@ -46,14 +54,15 @@ for (let button of triggerButtons) {
   button.addEventListener("click", function () {
     if (modalContainer.classList.contains("modal-active")) {
       modalContainer.classList.remove("modal-active");
+      addWorksModal.classList.add("modal-hidden");
     } else {
       modalContainer.classList.add("modal-active");
+      deleteWorksModal.classList.remove("modal-hidden");
     }
   });
 }
 
 // Faire apparaitre les projet dans la gallerie de la modale
-
 async function getWorksInModal() {
   try {
     const response = await fetch(getWorksApi); //Travaux virtuel
@@ -63,7 +72,7 @@ async function getWorksInModal() {
       const figure = document.createElement("figure");
       const img = document.createElement("img");
       const figcaption = document.createElement("figcaption");
-      const trashIconZone = document.createElement("div")
+      const trashIconZone = document.createElement("div");
       const trashIcon = document.createElement("i");
 
       figure.setAttribute("data-category-id", data[i].category.id);
@@ -71,16 +80,173 @@ async function getWorksInModal() {
       img.setAttribute("src", data[i].imageUrl);
       img.setAttribute("alt", data[i].title);
       img.setAttribute("crossorigin", "anonymous");
+      trashIcon.setAttribute("data-id", data[i].id);
       figcaption.innerHTML = "Editer";
-      trashIconZone.classList.add("trash-zone")
+      trashIconZone.classList.add("trash-zone");
       trashIcon.classList.add("fa-solid", "fa-trash-can", "trash-icon");
 
-      trashIconZone.append(trashIcon)
+      trashIconZone.append(trashIcon);
       figure.append(img, figcaption, trashIconZone);
       modalGallery.append(figure);
 
-      figures.push(figure); //On push chaque figure dans le tableau figures de manière à pouvoir utiliser chaque figure à l'exterieur de la boucle
+      trashIcons.push(trashIcon);
     }
+    deleteWorksInit();
   } catch (error) {}
 }
+
 getWorksInModal();
+
+// Supprimer des travaux
+async function deleteWorks(workId) {
+  const fetchInit = {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  };
+  try {
+    const response = await fetch(
+      `http://localhost:5678/api/works/${workId}`,
+      fetchInit
+    );
+
+    if (response.ok) {
+      let figures = document.querySelectorAll("figure");
+      for (let figure of figures) {
+        if (figure.getAttribute("data-id") === workId) {
+          figure.remove();
+        }
+      }
+    }
+  } catch {}
+}
+
+// Pour un travail
+function deleteWorksInit() {
+  for (let e of trashIcons) {
+    e.addEventListener("click", function () {
+      const workId = e.getAttribute("data-id");
+      deleteWorks(workId);
+    });
+  }
+}
+
+// Pour tous les travaux
+
+//Accéder à la modale d'ajout de projets
+addWorksButton.addEventListener("click", function () {
+  addWorksModal.classList.remove("modal-hidden");
+  deleteWorksModal.classList.add("modal-hidden");
+});
+
+// Retourner sur la modale de supression de projets
+backButton.addEventListener("click", function () {
+  addWorksModal.classList.add("modal-hidden");
+  deleteWorksModal.classList.remove("modal-hidden");
+});
+
+// Ajouter dynamiquement les catégories dans les options de select
+async function getCategories() {
+  try {
+    const response = await fetch("http://localhost:5678/api/categories");
+    const data = await response.json();
+    for (let i in data) {
+      const option = document.createElement("option");
+
+      option.setAttribute("value", data[i].id);
+      option.innerHTML = data[i].name;
+
+      select.append(option);
+    }
+  } catch {
+    console.log("saucisson");
+  }
+}
+getCategories();
+
+// Prévisualiser l'image uploadée dans la modale
+inputImage.addEventListener("change", function () {
+  const file = inputImage.files[0];
+
+  let reader = new FileReader();
+  reader.readAsDataURL(inputImage.files[0]);
+  reader.addEventListener("onload", function () {
+    previewImage.src = reader.result;
+  });
+
+  const hiddenPreviewElements = document.querySelectorAll(".hidden-to-preview");
+  for (let e of hiddenPreviewElements) {
+    e.style.visibility = "hidden";
+  }
+
+  previewImage.style.display = "block";
+});
+
+// Donner la classe completed lorsque les champs sont remplis
+function updateConfirmButton() {
+  if (
+    inputTitle.value.trim() !== "" &&
+    select.value !== "no-value" &&
+    inputImage.value !== ""
+  ) {
+    confirmAddWorkButton.classList.add("completed");
+  } else {
+    confirmAddWorkButton.classList.remove("completed");
+  }
+}
+
+inputTitle.addEventListener("input", updateConfirmButton);
+inputImage.addEventListener("input", updateConfirmButton);
+for (let option of select) {
+  option.addEventListener("change", updateConfirmButton);
+}
+
+// Création d'un projet lorsqu'on clique sur le bouton de validation
+formAddWorks.addEventListener("submit", async function (event) {
+  event.preventDefault();
+  if (confirmAddWorkButton.classList.contains("completed")) {
+    const postWorksApi = "http://localhost:5678/api/works";
+
+    const formData = new FormData();
+    formData.append("title", inputTitle.value);
+    formData.append("image", inputImage.files[0]);
+    formData.append("category", select.value);
+
+    const fetchInit = {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${userToken}`,
+      },
+      body: formData,
+    };
+    try {
+      const response = await fetch(postWorksApi, fetchInit);
+      if (response.ok) {
+        const figure = document.createElement("figure");
+        const img = document.createElement("img");
+        const figcaption = document.createElement("figcaption");
+
+        const reader = new FileReader();
+        reader.readAsDataURL(inputImage.files[0]);
+        reader.addEventListener("onload", function () {
+          img.src = reader.result;
+        });
+
+        figure.setAttribute("data-category-id", select.value);
+        img.setAttribute("alt", inputTitle.value);
+        figcaption.innerHTML = inputTitle.value;
+
+        
+        figure.append(img, figcaption);
+        gallery.append(figure);
+
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  } else {
+    alert("Veuillez remplir tous les champs");
+  }
+});

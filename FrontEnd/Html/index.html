@@ -31,7 +31,7 @@
 				<li><a href="#portfolio">projets</a></li>
 				<li><a href="#contact">contact</a></li>
 				<li class="login"><a href="loginScreen.html">login</a></li>
-				<li class="logout"><a href="loginScreen.html">logout</a></li>
+				<li class="logout hidden"><a href="loginScreen.html">logout</a></li>
 				<li><a href="https://www.instagram.com/" target="_blank"><img src="../assets/icons/instagram.png"
 							alt="Instagram"></a></li>
 			</ul>
@@ -131,20 +131,21 @@
 		<!-- Ajouter des travaux -->
 		<div class="modal add-works-modal modal-hidden">
 			<div class="modal-header">
-				<i class="fa-sharp fa-solid fa-xmark modal-trigger"></i>
+				<i class="fa-solid fa-arrow-left back-button"></i>
 				<i class="fa-sharp fa-solid fa-xmark modal-trigger"></i>
 
 			</div>
 			<h1>Galerie Photo</h1>
 			
 				<div class="upload-image-zone">
+					<img class="preview-image" src="../assets/icons/picture.svg" alt="icone photo">
 					<img class="hidden-to-preview" src="../assets/icons/picture.svg" alt="icone photo">
 					<label title="Ajouter une photo" class="hidden-to-preview special" for="file-input">+ Ajouter
 						photo</label>
 					<input type="file" id="file-input" class="image-input" name="fileInput">
 					<p class="hidden-to-preview">jpg, png : 4mo max</p>
 				</div>
-				<form method="POST" class="upload-edit-gallery">
+				<form method="POST" class="form-add-works">
 				<label for="title-input">Titre</label>
 				<input type="text" name="title" id="title-input">
 				<label for="categories">Catégorie</label>
