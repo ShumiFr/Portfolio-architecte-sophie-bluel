@@ -78,6 +78,8 @@ async function getWorksInModal() {
       const figcaption = document.createElement("figcaption");
       const trashIconZone = document.createElement("div");
       const trashIcon = document.createElement("i");
+      const moveIconZone = document.createElement("div");
+      const moveIcon = document.createElement("i");
 
       figure.setAttribute("data-category-id", data[i].category.id);
       figure.setAttribute("data-id", data[i].id);
@@ -85,12 +87,13 @@ async function getWorksInModal() {
       img.setAttribute("alt", data[i].title);
       img.setAttribute("crossorigin", "anonymous");
       trashIcon.setAttribute("data-id", data[i].id);
+      moveIcon.setAttribute("data-id", data[i].id);
       figcaption.innerHTML = "Editer";
       trashIconZone.classList.add("trash-zone");
       trashIcon.classList.add("fa-solid", "fa-trash-can", "trash-icon");
 
       trashIconZone.append(trashIcon);
-      figure.append(img, figcaption, trashIconZone);
+      figure.append(img, figcaption, trashIconZone,);
       modalGallery.append(figure);
 
       trashIcons.push(trashIcon);
